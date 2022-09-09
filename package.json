@@ -14,6 +14,8 @@
     "vue": "^3.2.2"
   },
   "devDependencies": {
+    "@commitlint/cli": "^17.1.2",
+    "@commitlint/config-conventional": "^17.1.0",
     "@typescript-eslint/eslint-plugin": "4.28.4",
     "@typescript-eslint/parser": "4.28.4",
     "@vitejs/plugin-vue": "^1.2.5",
@@ -33,8 +35,7 @@
   },
   "lint-staged": {
     "*.{js,jsx,vue,ts,tsx}": [
-      "npm run lint",
-      "git add"
+      "npm run lint"
     ],
     "*.js": "eslint --cache --fix"
   }
