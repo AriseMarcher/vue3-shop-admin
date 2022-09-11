@@ -8,8 +8,8 @@ console.log(store)
 
 onMounted(() => {
   getLoginInfo()
-    .then(res => {
-      console.log(res.data)
+    .then(data => {
+      console.log(data)
     })
 })
 

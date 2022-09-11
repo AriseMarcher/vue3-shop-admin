@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios, { AxiosRequestConfig } from 'axios'
 
 // baseURL: https://shop.fed.lagounews.com
 const request = axios.create({
@@ -23,4 +23,10 @@ request.interceptors.response.use(function (response) {
   return Promise.reject(error)
 })
 
-export default request
+export default <T>(config: AxiosRequestConfig) => {
+  return request(config).then(res => {
+    return res.data.data as T
+  })
+}
+
+// export default request

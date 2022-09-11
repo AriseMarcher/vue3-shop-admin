@@ -4,11 +4,11 @@
 
 import request from '@/utils/request'
 
-interface ResponseData<T> {
-  status: number
-  msg: string
-  data: T
-}
+// interface ResponseData<T> {
+//   status: number
+//   msg: string
+//   data: T
+// }
 
 interface loginInfo {
   logo_square: string
@@ -18,6 +18,11 @@ interface loginInfo {
 }
 
 export const getLoginInfo = () => {
+  return request<loginInfo>({
+    method: 'GET',
+    url: '/login/info'
+  })
+
   // return request.get<{
   //   status: number
   //   msg: string
@@ -28,5 +33,5 @@ export const getLoginInfo = () => {
   //     slide: string[]
   //   }
   // }>('/login/info')
-  return request.get<ResponseData<loginInfo>>('/login/info')
+  // return request.get<ResponseData<loginInfo>>('/login/info')
 }
