@@ -2,7 +2,7 @@ import axios, { AxiosRequestConfig } from 'axios'
 
 // baseURL: https://shop.fed.lagounews.com
 const request = axios.create({
-  baseURL: 'https://shop.fed.lagounews.com/api/admin'
+  baseURL: import.meta.env.VITE_API_BASEURL
 })
 
 // 请求拦截器
