@@ -9,7 +9,7 @@ console.log(store)
 onMounted(() => {
   getLoginInfo()
     .then(res => {
-      console.log(res)
+      console.log(res.data)
     })
 })
 

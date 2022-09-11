@@ -14,6 +14,12 @@ module.exports = {
     'standard'
   ],
   overrides: [
+    {
+      files: ['src/api/**/*.ts'],
+      rules: {
+        camelcase: 'off'
+      }
+    }
   ],
   parserOptions: {
     ecmaVersion: 'latest',
@@ -25,5 +31,6 @@ module.exports = {
     '@typescript-eslint'
   ],
   rules: {
-  }
+
+  },
 }
