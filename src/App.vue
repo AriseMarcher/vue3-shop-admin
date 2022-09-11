@@ -7,7 +7,7 @@ console.log(store)
 
 <template>
   <div>
-    hello
+    <h1>hello</h1>
     <a
       href="https://vitejs.dev"
       target="_blank"
@@ -31,7 +31,12 @@ console.log(store)
   </div>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
+
+h1 {
+  color: $color;
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;
