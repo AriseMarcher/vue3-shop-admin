@@ -1,8 +1,10 @@
 <script setup lang="ts">
+
 </script>
 
 <template>
   <div>
+    hello
     <a
       href="https://vitejs.dev"
       target="_blank"
