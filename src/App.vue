@@ -1,18 +1,7 @@
 <script setup lang='ts'>
 import { useStore } from '@/store'
-import { getLoginInfo } from '@/api/common'
-import { onMounted } from '@vue/runtime-core'
-
 const store = useStore()
 console.log(store)
-
-onMounted(() => {
-  getLoginInfo()
-    .then(data => {
-      console.log(data)
-    })
-})
-
 </script>
 
 <template>
@@ -38,6 +27,7 @@ onMounted(() => {
         alt="Vue logo"
       >
     </a>
+    <router-view />
   </div>
 </template>
 
