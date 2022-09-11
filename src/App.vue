@@ -1,8 +1,18 @@
-<script setup lang="ts">
+<script setup lang='ts'>
 import { useStore } from '@/store'
+import { getLoginInfo } from '@/api/common'
+import { onMounted } from '@vue/runtime-core'
 
 const store = useStore()
 console.log(store)
+
+onMounted(() => {
+  getLoginInfo()
+    .then(res => {
+      console.log(res)
+    })
+})
+
 </script>
 
 <template>
