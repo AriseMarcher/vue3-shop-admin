@@ -1,9 +1,13 @@
 <script setup lang="ts">
+import { useStore } from 'vuex'
 
+const store = useStore()
+console.log(store.state.count)
 </script>
 
 <template>
   <div>
+    <h1>{{ $store.state.count }}</h1>
     hello
     <a
       href="https://vitejs.dev"
