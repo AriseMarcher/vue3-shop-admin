@@ -1,33 +1,12 @@
 <script setup lang='ts'>
-import { useStore } from '@/store'
-const store = useStore()
-console.log(store)
+import locale from 'element-plus/lib/locale/lang/zh-cn'
 </script>
 
 <template>
   <div>
-    <h1>hello</h1>
-    <a
-      href="https://vitejs.dev"
-      target="_blank"
-    >
-      <img
-        src="/vite.svg"
-        class="logo"
-        alt="Vite logo"
-      >
-    </a>
-    <a
-      href="https://vuejs.org/"
-      target="_blank"
-    >
-      <img
-        src="./assets/vue.svg"
-        class="logo vue"
-        alt="Vue logo"
-      >
-    </a>
-    <router-view />
+    <el-config-provider :locale="locale">
+      <router-view />
+    </el-config-provider>
   </div>
 </template>
 
