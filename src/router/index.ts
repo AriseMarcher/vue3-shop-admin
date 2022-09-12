@@ -3,7 +3,9 @@ import {
   createWebHashHistory,
   RouteRecordRaw
 } from 'vue-router'
+import ngprogress from 'nprogress'
 import appLayout from '@/layout/app-layout.vue'
+import 'nprogress/nprogress.css'
 
 import productRoutes from './modules/product'
 import orderRoutes from './modules/order'
@@ -39,6 +41,14 @@ const routes: Readonly<RouteRecordRaw[]> = [
 const router = createRouter({
   history: createWebHashHistory(),
   routes
+})
+
+router.beforeEach(() => {
+  ngprogress.start()
+})
+
+router.afterEach(() => {
+  ngprogress.done()
 })
 
 export default router
