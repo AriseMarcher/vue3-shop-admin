@@ -3,12 +3,19 @@ import {
   createWebHashHistory,
   RouteRecordRaw
 } from 'vue-router'
+import appLayout from '@/layout/app-layout.vue'
 
 const routes: Readonly<RouteRecordRaw[]> = [
   {
-    path: '',
-    name: '',
-    component: () => import('@/views/home/index.vue')
+    path: '/',
+    component: appLayout,
+    children: [
+      {
+        path: '',
+        name: 'home',
+        component: () => import('@/views/home/index.vue')
+      }
+    ]
   },
   {
     path: '/login',
