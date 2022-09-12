@@ -5,15 +5,17 @@
   </el-icon>
 </template>
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { computed } from '@vue/reactivity'
 import { useStore } from '@/store/index'
 
 const store = useStore()
-const isCollapse = ref(store.state.isCollapse)
+
+const isCollapse = computed(() => {
+  return store.state.isCollapse
+})
 
 const setCollapse = () => {
   const expectVal = !store.state.isCollapse
   store.commit('setIsCollapse', expectVal)
-  isCollapse.value = expectVal
 }
 </script>

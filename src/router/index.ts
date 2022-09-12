@@ -14,6 +14,9 @@ const routes: Readonly<RouteRecordRaw[]> = [
   {
     path: '/',
     component: appLayout,
+    meta: {
+      title: '首页'
+    },
     children: [
       {
         path: '',
