@@ -1,5 +1,6 @@
 <template>
   <el-menu
+    :collapse="$store.state.isCollapse"
     active-text-color="#ffd04b"
     background-color="#304156"
     class="el-menu-vertical-demo"
@@ -71,11 +72,13 @@
 </template>
 
 <script lang="ts" setup>
-
 </script>
 
 <style lang="scss" scoped>
 .el-menu {
   border-right: 0;
+}
+.el-menu:not(.el-menu--collapse) {
+  width: 200px;
 }
 </style>
