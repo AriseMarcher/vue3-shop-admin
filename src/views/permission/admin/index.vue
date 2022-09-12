@@ -1,0 +1,3 @@
+<template>
+  permission-admin
+</template>
