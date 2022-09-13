@@ -4,11 +4,12 @@
 
 import request from '@/utils/request'
 import {
-  LoginInfo
+  ILoginInfo,
+  ILoginResponse
 } from './types/common'
 
-export const getLoginInfo = () => {
-  return request<LoginInfo>({
+export const getILoginInfo = () => {
+  return request<ILoginInfo>({
     method: 'GET',
     url: '/login/info'
   })
@@ -22,5 +23,17 @@ export const getCaptcha = () => {
       stamp: Date.now()
     },
     responseType: 'blob'
+  })
+}
+
+export const login = (data: {
+  account: string
+  pwd: string
+  imgcode: string
+}) => {
+  return request<ILoginResponse>({
+    method: 'POST',
+    url: '/login',
+    data
   })
 }

@@ -65,6 +65,7 @@
         <el-button
           class="submit-button"
           type="primary"
+          :loading="isLoading"
           native-type="submit"
         >
           登录
@@ -75,18 +76,20 @@
 </template>
 
 <script setup lang="ts">
-import { getCaptcha } from '@/api/common'
+import { getCaptcha, login } from '@/api/common'
 import { onMounted, reactive, ref } from 'vue'
-import type { FormRules } from 'element-plus'
+import type { FormRules, FormInstance } from 'element-plus'
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
 const user = reactive({
   account: 'admin',
   pwd: '123456',
   imgcode: ''
 })
-
+const isLoading = ref(false)
 const captchaSrc = ref('')
-
+const ruleFormRef = ref<FormInstance>()
 const rules = reactive<FormRules>({
   account: [
     { required: true, message: '请输入账号', trigger: 'change' }
@@ -100,18 +103,32 @@ const rules = reactive<FormRules>({
 })
 
 const handleSubmit = async () => {
-  console.log('onSubmit')
+  const valid = await ruleFormRef.value?.validate()
+  if (!valid) {
+    return false
+  }
+  isLoading.value = true
+  const loginData = await login(user).catch(() => {
+    loadCaptcha()
+  }).finally(() => {
+    isLoading.value = false
+  })
+  if (!loginData) return
+
+  router.replace({
+    name: 'home'
+  })
 }
 
 onMounted(() => {
   loadCaptcha()
 })
 
+// 刷新验证码
 const loadCaptcha = async () => {
   const data = await getCaptcha()
   captchaSrc.value = URL.createObjectURL(data)
 }
-
 </script>
 
 <style lang="scss" scoped>
