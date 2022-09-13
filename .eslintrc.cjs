@@ -35,6 +35,14 @@ module.exports = {
       "ignoreWhenNoAttributes": true,
       "ignoreWhenEmpty": true,
       "ignores": ["pre", "textarea"]
+    }],
+    "vue/max-attributes-per-line": ["error", {
+      "singleline": {
+        "max": 3
+      },      
+      "multiline": {
+        "max": 1
+      }
     }]
   },
 }
