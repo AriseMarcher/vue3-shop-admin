@@ -13,3 +13,14 @@ export const getLoginInfo = () => {
     url: '/login/info'
   })
 }
+
+export const getCaptcha = () => {
+  return request<Blob>({
+    method: 'GET',
+    url: '/captcha_pro',
+    params: {
+      stamp: Date.now()
+    },
+    responseType: 'blob'
+  })
+}

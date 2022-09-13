@@ -5,7 +5,6 @@
       :model="user"
       :rules="rules"
       class="login-form"
-      size="medium"
       status-icon
       @submit.prevent="handleSubmit"
     >
@@ -23,7 +22,7 @@
         >
           <template #prefix>
             <el-icon>
-              <User />
+              <user />
             </el-icon>
           </template>
         </el-input>
@@ -56,8 +55,9 @@
           </el-input>
           <img
             class="imgcode"
-            src=""
+            :src="captchaSrc"
             alt="验证码"
+            @click="loadCaptcha"
           >
         </div>
       </el-form-item>
@@ -75,10 +75,8 @@
 </template>
 
 <script setup lang="ts">
-// import { getLoginInfo } from '@/api/common'
-// import type { LoginInfo } from '@/api/types/common'
-// import { onMounted } from '@vue/runtime-core'
-import { reactive } from 'vue'
+import { getCaptcha } from '@/api/common'
+import { onMounted, reactive, ref } from 'vue'
 import type { FormRules } from 'element-plus'
 
 const user = reactive({
@@ -87,7 +85,7 @@ const user = reactive({
   imgcode: ''
 })
 
-// const captchaSrc = ref('')
+const captchaSrc = ref('')
 
 const rules = reactive<FormRules>({
   account: [
@@ -103,6 +101,15 @@ const rules = reactive<FormRules>({
 
 const handleSubmit = async () => {
   console.log('onSubmit')
+}
+
+onMounted(() => {
+  loadCaptcha()
+})
+
+const loadCaptcha = async () => {
+  const data = await getCaptcha()
+  captchaSrc.value = URL.createObjectURL(data)
 }
 
 </script>
