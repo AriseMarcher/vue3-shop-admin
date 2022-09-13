@@ -81,8 +81,10 @@ import { getCaptcha, login } from '@/api/common'
 import { onMounted, reactive, ref } from 'vue'
 import type { FormRules, FormInstance } from 'element-plus'
 import { useRouter } from 'vue-router'
+import { useStore } from '@/store'
 
 const router = useRouter()
+const store = useStore()
 const user = reactive({
   account: 'admin',
   pwd: '123456',
@@ -115,6 +117,8 @@ const handleSubmit = async () => {
     isLoading.value = false
   })
   if (!loginData) return
+
+  store.commit('setUser', loginData.user_info)
 
   router.replace({
     name: 'home'
