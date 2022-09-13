@@ -8,7 +8,7 @@ import { USER } from '@/utils/constants'
 export interface State {
   count: number
   isCollapse: boolean
-  user: null | IUserInfo
+  user: null | { token: string } & IUserInfo
 }
 
 // 定义 injection key
@@ -19,7 +19,7 @@ export const store = createStore<State>({
   state: {
     count: 0,
     isCollapse: false,
-    user: getItem<IUserInfo>(USER)
+    user: getItem<{ token: string } & IUserInfo>(USER)
   },
   mutations: {
     increment (state) {
@@ -30,7 +30,7 @@ export const store = createStore<State>({
     },
     setUser (state, payload) {
       state.user = payload
-      setItem(USER, JSON.stringify(state.user))
+      setItem(USER, JSON.stringify(payload))
     }
   }
 })

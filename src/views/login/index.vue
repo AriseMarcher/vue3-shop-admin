@@ -118,7 +118,10 @@ const handleSubmit = async () => {
   })
   if (!loginData) return
 
-  store.commit('setUser', loginData.user_info)
+  store.commit('setUser', {
+    token: loginData.token,
+    ...loginData.user_info
+  })
 
   router.replace({
     name: 'home'

@@ -1,5 +1,6 @@
 import axios, { AxiosRequestConfig } from 'axios'
 import { ElMessage } from 'element-plus'
+import { store } from '@/store'
 
 // baseURL: https://shop.fed.lagounews.com
 const request = axios.create({
@@ -10,6 +11,10 @@ const request = axios.create({
 
 request.interceptors.request.use(function (config) {
   // 统一设置用户身份 token
+  const user = store.state.user
+  if (user && user.token) {
+    config.headers!.Authorization = `Bearer ${user.token}`
+  }
   return config
 }, function (error) {
   return Promise.reject(error)
