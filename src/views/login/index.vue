@@ -43,6 +43,7 @@
       <el-form-item prop="imgcode">
         <div class="imgcode-wrap">
           <el-input
+            class="imgcode-input"
             v-model="user.imgcode"
             type="password"
             placeholder="请输入验证码"
@@ -90,7 +91,7 @@ const user = reactive({
 const isLoading = ref(false)
 const captchaSrc = ref('')
 const ruleFormRef = ref<FormInstance>()
-const rules = reactive<FormRules>({
+const rules = ref<FormRules>({
   account: [
     { required: true, message: '请输入账号', trigger: 'change' }
   ],
@@ -175,9 +176,13 @@ const loadCaptcha = async () => {
     width: 100%;
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    .imgcode-input {
+      width: 200px;
+    }
     .imgcode {
       width: 120px;
-      // height: 37px;
+      height: 30px;
     }
   }
 }
