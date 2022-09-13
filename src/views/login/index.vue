@@ -80,10 +80,11 @@
 import { getCaptcha, login } from '@/api/common'
 import { onMounted, reactive, ref } from 'vue'
 import type { FormRules, FormInstance } from 'element-plus'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import { useStore } from '@/store'
 
 const router = useRouter()
+const route = useRoute()
 const store = useStore()
 const user = reactive({
   account: 'admin',
@@ -123,9 +124,14 @@ const handleSubmit = async () => {
     ...loginData.user_info
   })
 
-  router.replace({
-    name: 'home'
-  })
+  console.log(route)
+
+  let redirect = route.query.redirect || '/'
+  // 容错处理
+  if (typeof redirect !== 'string') {
+    redirect = '/'
+  }
+  router.replace(redirect)
 }
 
 onMounted(() => {
