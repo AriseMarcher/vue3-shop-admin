@@ -7,10 +7,10 @@ export const STATUS_OPTIONS = [
   },
   {
     label: '显示',
-    value: '1'
+    value: 1
   },
   {
     label: '不显示',
-    value: '0'
+    value: 0
   }
 ]
