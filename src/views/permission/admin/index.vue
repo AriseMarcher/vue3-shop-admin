@@ -48,7 +48,7 @@
         添加管理员
       </el-button>
     </template>
-    <el-table :data="tableData" style="width: 100%">
+    <el-table :data="tableData" style="width: 100%" v-loading="listLoading">
       <el-table-column prop="id" label="ID" width="80" />
       <el-table-column prop="real_name" label="姓名" width="100" />
       <el-table-column prop="account" label="账号" width="100" />
@@ -103,14 +103,14 @@
     </el-table>
 
     <el-pagination
-      v-model:currentPage="currentPage4"
-      v-model:page-size="pageSize4"
-      :page-sizes="[100, 200, 300, 400]"
+      v-model:currentPage="currentPage"
+      v-model:page-size="pageSize"
+      :page-sizes="[10, 30, 50, 100]"
       :small="small"
       :disabled="disabled"
       :background="background"
       layout="total, sizes, prev, pager, next, jumper"
-      :total="400"
+      :total="total"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
     />
@@ -124,7 +124,7 @@ import { getAdmins } from '@/api/admin'
 import type { IListParams, Admin } from '@/api/types/admin'
 
 const adminForm = reactive({
-  page: 1, // 当前页码
+  page: 1, // currentPage4当前页码
   limit: 10, // 每页大小
   name: '',
   roles: '',
@@ -133,20 +133,26 @@ const adminForm = reactive({
 const tableData = ref<Admin[]>([])
 const statusOptions = STATUS_OPTIONS
 
-const currentPage4 = ref(4)
-const pageSize4 = ref(100)
+const currentPage = ref()
+const total = ref(0)
+const pageSize = ref(10)
 const small = ref(false)
 const background = ref(false)
 const disabled = ref(false)
+const listLoading = ref(false)
 
 onMounted(() => {
   loadList()
 })
 
 const loadList = async () => {
-  const data = await getAdmins(adminForm)
-  console.log(data)
+  listLoading.value = true
+  const data = await getAdmins(adminForm).finally(() => {
+    listLoading.value = false
+  })
+
   tableData.value = data.list
+  total.value = data.count
 }
 
 const handlerSearch = () => {
@@ -157,12 +163,15 @@ const addAdmin = () => {
   console.log('添加管理员')
 }
 
-const handleSizeChange = () => {
-  console.log('this is handleSizeChange')
+const handleSizeChange = (size: number) => {
+  adminForm.page = 1
+  adminForm.limit = size
+  loadList()
 }
 
-const handleCurrentChange = () => {
-  console.log('this is handleCurrentChange')
+const handleCurrentChange = (page: number) => {
+  adminForm.page = page
+  loadList()
 }
 
 const handleStatusChange = async (item: Admin) => {
