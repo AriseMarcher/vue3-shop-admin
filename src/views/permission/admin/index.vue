@@ -102,17 +102,11 @@
       </el-table-column>
     </el-table>
 
-    <el-pagination
-      v-model:currentPage="currentPage"
-      v-model:page-size="pageSize"
-      :page-sizes="[10, 30, 50, 100]"
-      :small="small"
-      :disabled="disabled"
-      :background="background"
-      layout="total, sizes, prev, pager, next, jumper"
-      :total="total"
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
+    <AppPagination
+      v-model:page="adminForm.page"
+      v-model:limit="adminForm.limit"
+      :total="listCount"
+      :load-list="loadList"
     />
   </el-card>
 </template>
@@ -133,12 +127,7 @@ const adminForm = reactive({
 const tableData = ref<Admin[]>([])
 const statusOptions = STATUS_OPTIONS
 
-const currentPage = ref()
-const total = ref(0)
-const pageSize = ref(10)
-const small = ref(false)
-const background = ref(false)
-const disabled = ref(false)
+const listCount = ref(0)
 const listLoading = ref(false)
 
 onMounted(() => {
@@ -152,7 +141,7 @@ const loadList = async () => {
   })
 
   tableData.value = data.list
-  total.value = data.count
+  listCount.value = data.count
 }
 
 const handlerSearch = () => {
@@ -161,17 +150,6 @@ const handlerSearch = () => {
 
 const addAdmin = () => {
   console.log('添加管理员')
-}
-
-const handleSizeChange = (size: number) => {
-  adminForm.page = 1
-  adminForm.limit = size
-  loadList()
-}
-
-const handleCurrentChange = (page: number) => {
-  adminForm.page = page
-  loadList()
 }
 
 const handleStatusChange = async (item: Admin) => {

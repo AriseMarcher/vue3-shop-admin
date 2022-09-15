@@ -43,6 +43,8 @@ module.exports = {
       "multiline": {
         "max": 1
       }
-    }]
+    }],
+    "no-debugger": "off",
+    "no-console": "off"
   },
 }
