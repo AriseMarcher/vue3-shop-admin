@@ -95,7 +95,9 @@ const handleSubmit = async () => {
     ...tree.value?.getCheckedKeys(true) as any,
     ...tree.value?.getHalfCheckedKeys() as any
   ]
-  await saveRole(props.roleId || 0, formData.value)
+  await saveRole(props.roleId || 0, formData.value).finally(() => {
+    formLoading.value = false
+  })
   emit('success')
   ElMessage.success('保存成功')
 }

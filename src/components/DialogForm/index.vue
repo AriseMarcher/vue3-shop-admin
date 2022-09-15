@@ -46,9 +46,19 @@ const handleCancel = () => {
 }
 const handleConfirm = async () => {
   confirmLoading.value = true
-  await props.confirm()
-  confirmLoading.value = false
+  await props.confirm().finally(() => {
+    confirmLoading.value = false
+  })
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.el-select {
+  width: 100%;
+}
+
+.el-tree {
+  height: 250px;
+  overflow: auto;
+}
+</style>
