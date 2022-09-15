@@ -75,7 +75,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
 import { STATUS_OPTIONS } from '@/utils/constants'
 
 const adminForm = reactive({
@@ -93,6 +93,10 @@ const pageSize4 = ref(100)
 const small = ref(false)
 const background = ref(false)
 const disabled = ref(false)
+
+onMounted(() => {
+
+})
 
 const handlerSearch = () => {
   console.log('开始查询')

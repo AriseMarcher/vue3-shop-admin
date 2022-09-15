@@ -29,3 +29,12 @@ export interface IListResponse {
   count: number
   list: Array<Admin>
 }
+
+export interface IAdminPostData {
+  account: string
+  conf_pwd: string
+  pwd: string
+  roles: string
+  status: number
+  real_name: string
+}
