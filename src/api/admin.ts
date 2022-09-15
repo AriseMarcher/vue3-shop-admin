@@ -47,6 +47,6 @@ export const updateAdminStatus = (
 ) => {
   return request({
     method: 'PUT',
-    url: `/setting/admin/${id}/${status}`
+    url: `/setting/set_status/${id}/${status}`
   })
 }

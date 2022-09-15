@@ -9,6 +9,7 @@
       :inline="true"
       :model="adminForm"
       class="demo-form-inline"
+      :disabled="listLoading"
     >
       <el-form-item label="状态">
         <el-select
@@ -107,6 +108,7 @@
       v-model:limit="adminForm.limit"
       :total="listCount"
       :load-list="loadList"
+      :disabled="listLoading"
     />
   </el-card>
 </template>
@@ -114,8 +116,13 @@
 <script lang="ts" setup>
 import { ref, reactive, onMounted } from 'vue'
 import { STATUS_OPTIONS } from '@/utils/constants'
-import { getAdmins } from '@/api/admin'
+import {
+  getAdmins,
+  deleteAdmin,
+  updateAdminStatus
+} from '@/api/admin'
 import type { IListParams, Admin } from '@/api/types/admin'
+import { ElMessage } from 'element-plus'
 
 const adminForm = reactive({
   page: 1, // currentPage4当前页码
@@ -139,6 +146,9 @@ const loadList = async () => {
   const data = await getAdmins(adminForm).finally(() => {
     listLoading.value = false
   })
+  data.list.forEach(item => {
+    item.statusLoading = false
+  })
 
   tableData.value = data.list
   listCount.value = data.count
@@ -153,9 +163,18 @@ const addAdmin = () => {
 }
 
 const handleStatusChange = async (item: Admin) => {
-
+  item.statusLoading = true
+  await updateAdminStatus(item.id, item.status as number).finally(() => {
+    item.statusLoading = false
+  })
+  ElMessage.success(`${item.status === 1 ? '启用' : '禁用'}成功`)
 }
 
 const handleUpdate = (id: number) => {}
-const handleDelete = async (id: number) => {}
+const handleDelete = async (id: number) => {
+  await deleteAdmin(id)
+  ElMessage.success('删除成功')
+  tableData.value.length === 1 && (adminForm.page = 1)
+  loadList()
+}
 </script>
