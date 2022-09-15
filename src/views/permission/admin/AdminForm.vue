@@ -158,10 +158,9 @@ const handleDialogClose = () => {
 }
 const handleDialogOpen = () => {
   formLoading.value = true
-  loadRoles().finally(() => {
+  Promise.all([loadRoles(), loadAdmin()]).finally(() => {
     formLoading.value = false
   })
-  loadAdmin()
 }
 const handleSubmit = async () => {
   const valid = await form.value?.validate()
