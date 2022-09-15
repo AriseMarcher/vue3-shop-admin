@@ -44,7 +44,7 @@
     <template #header>
       <el-button
         type="primary"
-        @click="addAdmin"
+        @click="formVisible = true"
       >
         添加管理员
       </el-button>
@@ -111,6 +111,10 @@
       :disabled="listLoading"
     />
   </el-card>
+  <AdminForm
+    v-model="formVisible"
+    v-model:admin-id="adminId"
+  />
 </template>
 
 <script lang="ts" setup>
@@ -123,6 +127,7 @@ import {
 } from '@/api/admin'
 import type { IListParams, Admin } from '@/api/types/admin'
 import { ElMessage } from 'element-plus'
+import AdminForm from './AdminForm.vue'
 
 const adminForm = reactive({
   page: 1, // currentPage4当前页码
@@ -136,6 +141,8 @@ const statusOptions = STATUS_OPTIONS
 
 const listCount = ref(0)
 const listLoading = ref(false)
+const formVisible = ref(false)
+const adminId = ref<number | null>(null)
 
 onMounted(() => {
   loadList()
@@ -158,10 +165,6 @@ const handlerSearch = () => {
   loadList()
 }
 
-const addAdmin = () => {
-  console.log('添加管理员')
-}
-
 const handleStatusChange = async (item: Admin) => {
   item.statusLoading = true
   await updateAdminStatus(item.id, item.status as number).finally(() => {
@@ -170,7 +173,10 @@ const handleStatusChange = async (item: Admin) => {
   ElMessage.success(`${item.status === 1 ? '启用' : '禁用'}成功`)
 }
 
-const handleUpdate = (id: number) => {}
+const handleUpdate = (id: number) => {
+  adminId.value = id
+  formVisible.value = true
+}
 const handleDelete = async (id: number) => {
   await deleteAdmin(id)
   ElMessage.success('删除成功')
