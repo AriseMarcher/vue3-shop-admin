@@ -35,7 +35,7 @@ export interface IAdminPostData {
   account: string
   conf_pwd: string
   pwd: string
-  roles: string
-  status: statusType
+  roles: number[]
+  status: 0 | 1
   real_name: string
 }
