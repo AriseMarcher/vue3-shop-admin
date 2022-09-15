@@ -114,6 +114,7 @@
   <AdminForm
     v-model="formVisible"
     v-model:admin-id="adminId"
+    @success="handleSuccess"
   />
 </template>
 
@@ -181,6 +182,10 @@ const handleDelete = async (id: number) => {
   await deleteAdmin(id)
   ElMessage.success('删除成功')
   tableData.value.length === 1 && (adminForm.page = 1)
+  loadList()
+}
+const handleSuccess = () => {
+  formVisible.value = false
   loadList()
 }
 </script>

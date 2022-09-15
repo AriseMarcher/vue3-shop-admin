@@ -1,6 +1,7 @@
 <template>
   <app-dialog-form
     :title="formTitle"
+    :confirm="handleSubmit"
     @close="handleDialogClose"
     @open="handleDialogOpen"
   >
@@ -87,14 +88,16 @@
 <script lang="ts" setup>
 import type { PropType } from 'vue'
 import { computed, ref, reactive } from 'vue'
-import type { FormInstance, FormRules } from 'element-plus'
+import { ElMessage, FormInstance, FormRules } from 'element-plus'
 import { ISelectOptions } from '@/api/types/form'
-import { getRoles, getAdmin } from '@/api/admin'
+import { getRoles, getAdmin, createAdmin, updateAdmin } from '@/api/admin'
+import { IAdminPostData } from '@/api/types/admin'
 
 const formLoading = ref(false)
 const props = defineProps({
   adminId: {
     type: Number as PropType<number | null>,
+    default: null,
     required: false
   }
 })
@@ -103,7 +106,7 @@ const form = ref<FormInstance | null>(null)
 const formTitle = computed(() => {
   return props.adminId ? '编辑管理员' : '添加管理员'
 })
-const formData = ref({
+const formData = ref<IAdminPostData>({
   account: '',
   pwd: '',
   conf_pwd: '',
@@ -133,6 +136,7 @@ const roles = ref<ISelectOptions[]>([])
 
 interface EmitsType {
   (e: 'update:admin-id', id: number | null): void
+  (e: 'success'): void
 }
 const emit = defineEmits<EmitsType>()
 
@@ -158,6 +162,20 @@ const handleDialogOpen = () => {
     formLoading.value = false
   })
   loadAdmin()
+}
+const handleSubmit = async () => {
+  const valid = await form.value?.validate()
+  if (!valid) return
+
+  if (props.adminId) {
+    // 更新管理员
+    await updateAdmin(props.adminId, formData.value)
+  } else {
+    // 添加管理员
+    await createAdmin(formData.value)
+  }
+  emit('success')
+  ElMessage.success('保存成功')
 }
 </script>
 
