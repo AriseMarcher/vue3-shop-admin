@@ -45,6 +45,7 @@ module.exports = {
       }
     }],
     "no-debugger": "off",
-    "no-console": "off"
+    "no-console": "off",
+    "vue/no-mutating-props": "off"
   },
 }
