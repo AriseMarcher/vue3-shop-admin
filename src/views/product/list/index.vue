@@ -69,7 +69,7 @@
         <el-button
           type="primary"
           icon="el-icon-plus"
-          @click="$router.push('/admin/product/add_product')"
+          @click="$router.push('/product/product_add')"
         >
           添加商品
         </el-button>
